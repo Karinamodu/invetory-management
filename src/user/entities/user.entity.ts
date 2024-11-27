@@ -4,7 +4,7 @@ import { Document } from 'mongoose';
 @Schema({
     timestamps:true
 })
-export class User {
+export class User extends Document{
     @Prop({
         required: true
     })
@@ -33,7 +33,7 @@ export class User {
     password:string
 }
 
-export type UserDocument = User & Document;
+// export type UserDocument = User & Document;
 
 
 export const userSchema = SchemaFactory.createForClass(User)

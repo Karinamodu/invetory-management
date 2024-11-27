@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { ProductModule } from './product/product.module';
 import { UserModule } from './user/user.module';
+import { LoggerModule } from './common/logger';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UserModule } from './user/user.module';
       isGlobal: true
     }),
     MongooseModule.forRoot(process.env.MONGODB_URI),
+    LoggerModule,
     UserModule,
     ProductModule,
     SupplierModule,

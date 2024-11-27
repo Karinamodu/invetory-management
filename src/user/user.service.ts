@@ -4,15 +4,13 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import { User, UserDocument } from './entities/user.entity';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectModel(User.name)
-    private userModel: Model<UserDocument>
-  ){}
-  async createUser(payload:CreateUserDto): Promise<UserDocument>{
+    @InjectModel(User.name) private userModel: Model<User>){}
+  async createUser(payload:CreateUserDto): Promise<User>{
     const {firstName, lastName, username, password, email} = payload
     const emailExists = await this.userModel.findOne({email}).exec();
     if(emailExists){
@@ -40,11 +38,11 @@ export class UserService {
     return bcrypt.hash(password, saltRounds)
   }
 
-  async getUserById(id: string): Promise<UserDocument>{
+  async getUserById(id: string): Promise<User>{
     return this.userModel.findById(id).exec();
   }
   
-  async getUserByEmail( email: string): Promise<UserDocument>{
+  async getUserByEmail( email: string): Promise<User>{
     return this.userModel.findOne({email}).exec();
   }
 }

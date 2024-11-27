@@ -7,9 +7,11 @@ import { PassportModule } from '@nestjs/passport';
 import { UserModule } from 'src/user/user.module';
 import { UserService } from 'src/user/user.service';
 import { JwtStrategy } from './strategy/jwt.strategy';
+import { LoggerModule } from 'src/common/logger';
 
 @Module({
   imports: [
+    LoggerModule,
     UserModule,
     PassportModule,
     JwtModule.registerAsync({

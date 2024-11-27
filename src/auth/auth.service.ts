@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
-import { User, UserDocument } from 'src/user/entities/user.entity';
+import { User} from 'src/user/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { IJwtPayload } from 'src/common/interface/interface';
 import { JwtService } from '@nestjs/jwt';
@@ -12,8 +12,8 @@ export class AuthService {
     private readonly jwtService:JwtService
   ){}
 
-  async validateUser(email: string, password: string): Promise<UserDocument> {
-    return this.validateEntity<UserDocument>(email, password, this.userService.getUserByEmail.bind(this.userService));
+  async validateUser(email: string, password: string): Promise<User> {
+    return this.validateEntity<User>(email, password, this.userService.getUserByEmail.bind(this.userService));
   }
 
   private async validateEntity<T>(
@@ -45,7 +45,7 @@ export class AuthService {
     return user;
   }
 
-  async userLogin(user: UserDocument) {
+  async userLogin(user: User) {
     const payload: IJwtPayload = { email: user.email, id: user._id.toString() };
     const accessToken = this.jwtService.sign(payload, {
       expiresIn: '60s', // Token expiration time
