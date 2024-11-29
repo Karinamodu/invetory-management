@@ -7,12 +7,16 @@ import { SupplierModule } from './supplier/supplier.module';
 import { ProductModule } from './product/product.module';
 import { UserModule } from './user/user.module';
 import { LoggerModule } from './common/logger';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
-      isGlobal: true
+      isGlobal: true,
+      validationSchema: Joi.object({
+        JWT_SECRET: Joi.string().required(),
+      })
     }),
     MongooseModule.forRoot(process.env.MONGODB_URI),
     LoggerModule,
@@ -26,3 +30,5 @@ import { LoggerModule } from './common/logger';
   providers: [],
 })
 export class AppModule {}
+
+// npm install joi
